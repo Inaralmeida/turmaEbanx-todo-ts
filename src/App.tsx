@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import './App.css'
 import Button from './components/Button'
 import Input from './components/Input'
-import Textarea from './components/Textarea/indes'
+import Textarea from './components/Textarea'
 
 type TarefaProps = {
   titulo: string
@@ -13,8 +12,9 @@ type TarefaProps = {
 }
 
 function App() {
-  const [titulo, setTitulo] = useState('')
-  const [descricao, setDescricao] = useState('')
+  const [listaTarefas, setListaTarefas] = useState<TarefaProps[]>([])
+  const [titulo, setTitulo] = useState<string>('')
+  const [descricao, setDescricao] = useState<string>('')
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault()
@@ -26,7 +26,9 @@ function App() {
       id: Math.floor(Math.random() * 1000),
     }
 
-    console.log(novaTarefa)
+    const newLista = [...listaTarefas, novaTarefa]
+    setListaTarefas(newLista)
+    localStorage.setItem('tarefas', JSON.stringify(newLista))
   }
 
   return (
